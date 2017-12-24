@@ -20,16 +20,30 @@ instance Yesod Links
 getHomeR :: Handler Html
 getHomeR = defaultLayout [whamlet|
 <a href=@{Page1R}>Go to page 1!
-<a href=@{JsonR}>json!
+<a href=@{Page2R}>Go to page 2!
+^{footer}
 |]
 
 getPage1R :: Handler Html
-getPage1R = defaultLayout [whamlet|<a href=@{Page2R}>Go to page 2!|]
+getPage1R = defaultLayout [whamlet|
+<a href=@{Page2R}>Go to page 2!
+^{footer}
+|]
 
 getPage2R :: Handler Html
-getPage2R = defaultLayout [whamlet|<a href=@{HomeR}>Go home!|]
+getPage2R = defaultLayout [whamlet|
+<a href=@{Page1R}>Go to page 1!
+^{footer}
+|]
 
 getJsonR = return $ object ["msg" .= "Hello, World"]
+
+footer = [hamlet|
+<footer>
+  Return to #
+  <a href=@{HomeR}> Homepage
+  <a href=@{JsonR}> JSON
+|]
 
 main :: IO ()
 main = warp 3000 Links
